@@ -12,4 +12,4 @@ Les morts peuvent se téléporter à n'importe qui sans permission et sont en sp
 La commande /start sépare tous les joueurs aux quatres coins de la map.
 La commande /sacrifice tue le joueur qui l'exécute et supprime son stuff, sur sa tombe apparaît un totem d'immortalité pour l'utiliser sur d'autres joueurs
 
-Le plugin sera probablement mis sur spigot avec une meilleur capacité de configuration
+Le plugin sera probablement mis sur spigot avec une meilleure capacité de configuration
