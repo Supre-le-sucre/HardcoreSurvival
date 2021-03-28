@@ -1,0 +1,14 @@
+name: HardcoreSurvival
+version: 0.0.1
+author: bistourimaisaussiunpeusuprequandmeme
+main: fr.supre.hardcoresurvival.core.Main
+api-version: 1.16
+commands:
+  revive:
+    description: revive un joueur
+  sacrifice:
+    description: se sacrifier pour un totem
+  tpto:
+    description: se teleporter a qqn quand on a dead ca
+  start:
+    description: start la game
