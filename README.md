@@ -13,3 +13,7 @@ La commande /start sépare tous les joueurs aux quatres coins de la map. Si il y
 La commande /sacrifice tue le joueur qui l'exécute et supprime son stuff, sur sa tombe apparaît un totem d'immortalité pour l'utiliser sur d'autres joueurs pour les faire revivre
 
 Le plugin sera probablement mis sur spigot avec une meilleure capacité de configuration
+
+Known issue:
+
+Le data.yml semble avoir des difficultés de mis à jour avec /revive
