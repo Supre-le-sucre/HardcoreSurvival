@@ -1,5 +1,5 @@
 # HardcoreSurvival
-Plugin Français qui rend les survies hardcores en multijoueurs plus sympathique :p
+Plugin Français qui rend les survies hardcores en multijoueur plus sympathique :p
 
 ----------------------------
 Revive avec des totems d'immortalité, tenez vous à l'endroit de la tombe et jeter votre totem pour faire revivre la personne !
