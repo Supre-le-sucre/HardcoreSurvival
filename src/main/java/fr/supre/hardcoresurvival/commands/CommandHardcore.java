@@ -44,9 +44,9 @@ public class CommandHardcore implements CommandExecutor {
                             p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, target.getLocation(), 75);
                             p.getWorld().playSound(target.getLocation(), Sound.ENTITY_WITHER_DEATH, 100, 1.5F);
                             List<String> deadList = main.cfmg.getDatas().getStringList("Datas.dead");
-                            deadList.remove(String.valueOf(p.getUniqueId()));
+                            deadList.remove(String.valueOf(target.getUniqueId()));
                             main.cfmg.getDatas().set("Datas.dead", deadList);
-                            main.cfmg.getDatas().set("Datas."+p.getUniqueId(), null);
+                            main.cfmg.getDatas().set("Datas."+target.getUniqueId(), null);
                             main.cfmg.saveDatas();
                         } else p.sendMessage("§c§lLe joueur n'est pas mort !");
                     } else p.sendMessage("§c§lVous ne pouvez pas revive un joueur hors-ligne");
