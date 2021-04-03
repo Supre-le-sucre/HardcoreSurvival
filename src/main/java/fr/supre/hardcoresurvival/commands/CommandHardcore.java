@@ -74,8 +74,23 @@ public class CommandHardcore implements CommandExecutor {
                 int definition2 = 1;
                 int definition3 = 2;
                 int definition4 = 3;
-                Collection<? extends Player> playerCollection = Bukkit.getServer().getOnlinePlayers();
-                ArrayList<Player> players = new ArrayList(playerCollection);
+                ArrayList<Player> players = new ArrayList<Player>();
+                if(args.length == 0) {
+                    Collection<? extends Player> playerCollection = Bukkit.getServer().getOnlinePlayers();;
+                    players = new ArrayList(playerCollection);
+                }
+                else {
+                    for(int i=0; i<args.length ; i++) {
+                        Player target = Bukkit.getPlayer(args[i]);
+                        if(Bukkit.getServer().getOnlinePlayers().contains(target)) {
+                            players.add(target);
+                            p.sendMessage("§6[§4Hardore§6] §cLe jeu a commencé pour §e"+ target.getName());
+                            target.sendMessage("§6[§4Hardcore§6] §cBonne chance ! >:3");
+                        }
+                        else p.sendMessage("§c§lVous ne pouvez pas faire commencer le jeu à un joueur hors-ligne");
+                    }
+
+                }
                 for(int i = 0; i < players.size() ; i++) {
                     int x = 0;
                     int z = 0;
@@ -100,10 +115,13 @@ public class CommandHardcore implements CommandExecutor {
                         definition4 = definition4 + 4;
                     }
                     Location startLoc = new Location(p.getWorld(), x, 150, z);
+                    players.get(i).getInventory().clear();
+                    players.get(i).setHealth(20);
+                    players.get(i).setFoodLevel(30);
                     players.get(i).addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, Integer.MAX_VALUE));
                     players.get(i).teleport(startLoc);
                 }
-                Bukkit.getServer().broadcastMessage("§6[§4Hardcore§6] §cBonne chance ! >:3");
+                if(args.length == 0) Bukkit.getServer().broadcastMessage("§6[§4Hardcore§6] §cBonne chance ! >:3");
 
             }
             return true;
