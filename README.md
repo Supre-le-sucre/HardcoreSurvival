@@ -16,4 +16,4 @@ Le plugin sera probablement mis sur spigot avec une meilleure capacité de confi
 
 Known issue:
 
-Le data.yml semble avoir des difficultés de mis à jour avec /revive
+Aucune
