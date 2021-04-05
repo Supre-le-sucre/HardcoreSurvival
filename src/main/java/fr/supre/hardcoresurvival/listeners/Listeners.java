@@ -10,6 +10,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 //Créé quasi entièrement par Bistouri
+import java.util.ArrayList;
 import java.util.List;
 
 public class Listeners implements Listener {
@@ -51,7 +52,7 @@ public class Listeners implements Listener {
     public void onSleeping(PlayerBedEnterEvent event) {
         if (!event.isCancelled()) {
             playerSleeping++;
-            Bukkit.broadcastMessage("§a" + event.getPlayer().getName() + " §eest en train de dormir ! §c§lAU DODO ! \n \n§eIl y a §a" + playerSleeping + " §6/ §c" + Bukkit.getServer().getOnlinePlayers().size() + "§e qui font dodo...");
+            Bukkit.broadcastMessage("§a" + event.getPlayer().getName() + " §eest en train de dormir ! §c§lAU DODO ! \n \n§eIl y a §a" + playerSleeping + " §6/ §c" + getNumberOfRequiredSleep() + "§e qui font dodo...");
         }
     }
     @EventHandler
@@ -64,7 +65,7 @@ public class Listeners implements Listener {
     @EventHandler
     public void onNotSleeping(PlayerBedLeaveEvent event) {
         playerSleeping--;
-        Bukkit.broadcastMessage("§c"+ event.getPlayer().getName() + " §ene dors plus...\n \n§eIl y a §a" + playerSleeping + " §6/ §c" + Bukkit.getServer().getOnlinePlayers().size() + "§e qui font dodo...");
+        Bukkit.broadcastMessage("§c"+ event.getPlayer().getName() + " §ene dors plus...\n \n§eIl y a §a" + playerSleeping + " §6/ §c" + getNumberOfRequiredSleep() + "§e qui font dodo...");
     }
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
@@ -106,4 +107,16 @@ public class Listeners implements Listener {
            }
         }
     }
+    int getNumberOfRequiredSleep() {
+        int n = 0;
+        ArrayList<Player> Online =  new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
+        int total = Online.size();
+        for(int i=0; i<Online.size(); i++) {
+            if(Online.get(i).getGameMode().equals(GameMode.SPECTATOR)) n++;
+            if(!Online.get(i).getWorld().getEnvironment().equals(World.Environment.NORMAL)) n++;
+
+        }
+        return total-n;
+    }
+
 }
