@@ -2,8 +2,6 @@ package fr.supre.hardcoresurvival.listeners;
 
 import fr.supre.hardcoresurvival.core.ConfigManager;
 import fr.supre.hardcoresurvival.core.Main;
-import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,9 +25,8 @@ public class Listeners implements Listener {
         Player p = event.getEntity();
         Location ploc = p.getLocation();
         p.getWorld().playSound(ploc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 100, 2F);
-        List<String> dataList = main.cfmg.getDatas().getStringList("Datas");
+        List<String> dataList = main.cfmg.getDatas().getStringList("Datas.dead");
         dataList.add(String.valueOf(p.getUniqueId()));
-        main.cfmg.getDatas().getStringList("Datas").add("dead");
         main.cfmg.getDatas().set("Datas.dead", dataList);
         main.cfmg.getDatas().getStringList("Datas").add(String.valueOf(p.getUniqueId()));
         main.cfmg.getDatas().getStringList("Datas."+p.getUniqueId()).add("X");
@@ -47,7 +44,7 @@ public class Listeners implements Listener {
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+3,ploc.getZ()).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()+1).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()-1).getBlock().setType(Material.CRACKED_STONE_BRICKS);
-        event.deathMessage(Component.text("§6"+ p.getName() + " §cest mort en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §cpaix a son âme..."));
+        event.setDeathMessage("§6"+ p.getName() + " §cest mort en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §cpaix a son âme...");
         p.setGameMode(GameMode.SPECTATOR);
     }
     @EventHandler
@@ -58,7 +55,7 @@ public class Listeners implements Listener {
         }
     }
     @EventHandler
-    public void onChat(AsyncChatEvent event) {
+    public void onChat(AsyncPlayerChatEvent event) {
         if(!event.getPlayer().hasPermission("hardcore.chat")) {
             event.setCancelled(true);
             event.getPlayer().sendMessage("§c§lLa communication sur le tchat est désactivée !");

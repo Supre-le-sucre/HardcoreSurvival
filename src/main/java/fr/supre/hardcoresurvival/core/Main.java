@@ -3,7 +3,6 @@ package fr.supre.hardcoresurvival.core;
 import fr.supre.hardcoresurvival.commands.CommandHardcore;
 import fr.supre.hardcoresurvival.listeners.Listeners;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
 
 public class Main extends JavaPlugin {
     public ConfigManager cfmg;
