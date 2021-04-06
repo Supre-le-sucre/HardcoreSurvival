@@ -113,7 +113,7 @@ public class Listeners implements Listener {
         int total = Online.size();
         for(int i=0; i<Online.size(); i++) {
             if(Online.get(i).getGameMode().equals(GameMode.SPECTATOR)) n++;
-            if(!Online.get(i).getWorld().getEnvironment().equals(World.Environment.NORMAL)) n++;
+            else if(!Online.get(i).getWorld().getEnvironment().equals(World.Environment.NORMAL)) n++;
 
         }
         return total-n;
