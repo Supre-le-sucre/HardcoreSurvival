@@ -45,7 +45,8 @@ public class Listeners implements Listener {
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+3,ploc.getZ()).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()+1).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()-1).getBlock().setType(Material.CRACKED_STONE_BRICKS);
-        event.setDeathMessage("§6"+ p.getName() + " §cest mort en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §cpaix a son âme...");
+        String d  = event.getDeathMessage();
+        event.setDeathMessage("§6"+ p.getName() + " §c"+d+" §e en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §epaix a son âme...");
         p.setGameMode(GameMode.SPECTATOR);
     }
     @EventHandler
@@ -113,7 +114,7 @@ public class Listeners implements Listener {
         int total = Online.size();
         for(int i=0; i<Online.size(); i++) {
             if(Online.get(i).getGameMode().equals(GameMode.SPECTATOR)) n++;
-            if(!Online.get(i).getWorld().getEnvironment().equals(World.Environment.NORMAL)) n++;
+            else if(!Online.get(i).getWorld().getEnvironment().equals(World.Environment.NORMAL)) n++;
 
         }
         return total-n;
