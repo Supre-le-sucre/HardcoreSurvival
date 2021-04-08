@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,10 +28,13 @@ public class Main extends JavaPlugin {
 
         //Recipe (Can be disabled and modified in the completed version of this plugin)
         ItemStack badOmenPotion = new ItemStack(Material.POTION);
-        PotionMeta badOmenMeta = (PotionMeta) badOmenPotion.getItemMeta();
-        badOmenMeta.addCustomEffect(new PotionEffect(PotionEffectType.BAD_OMEN, Integer.MAX_VALUE, 2), true);
-        badOmenMeta.setColor(Color.fromRGB(95,53,116));
-        badOmenPotion.setItemMeta(badOmenMeta);
+        ItemMeta badOmenPotionName = badOmenPotion.getItemMeta();
+        badOmenPotionName.setDisplayName("§5§lBad Omen III §d§lPotion");
+        badOmenPotion.setItemMeta(badOmenPotionName);
+        PotionMeta badOmenPotionMeta = (PotionMeta) badOmenPotion.getItemMeta();
+        badOmenPotionMeta.addCustomEffect(new PotionEffect(PotionEffectType.BAD_OMEN, Integer.MAX_VALUE, 2), true);
+        badOmenPotionMeta.setColor(Color.fromRGB(95,53,116));
+        badOmenPotion.setItemMeta(badOmenPotionMeta);
 
         ShapelessRecipe badOmenRecipe = new ShapelessRecipe(badOmenPotion);
         badOmenRecipe.addIngredient(Material.FERMENTED_SPIDER_EYE);
@@ -42,6 +46,8 @@ public class Main extends JavaPlugin {
         badOmenRecipe.addIngredient(Material.NETHERITE_INGOT);
         badOmenRecipe.addIngredient(Material.GHAST_TEAR);
         badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
+
+        getServer().addRecipe(badOmenRecipe);
 
     }
 
