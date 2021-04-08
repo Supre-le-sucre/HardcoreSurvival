@@ -26,10 +26,10 @@ public class Main extends JavaPlugin {
         getCommand("start").setExecutor(new CommandHardcore(this));
 
         //Recipe (Can be disabled and modified in the completed version of this plugin)
-        PotionMeta badOmenMeta = null;
+        ItemStack badOmenPotion = new ItemStack(Material.POTION);
+        PotionMeta badOmenMeta = (PotionMeta) badOmenPotion.getItemMeta();
         badOmenMeta.addCustomEffect(new PotionEffect(PotionEffectType.BAD_OMEN, Integer.MAX_VALUE, 2), true);
         badOmenMeta.setColor(Color.fromRGB(95,53,116));
-        ItemStack badOmenPotion = new ItemStack(Material.POTION);
         badOmenPotion.setItemMeta(badOmenMeta);
 
         ShapelessRecipe badOmenRecipe = new ShapelessRecipe(badOmenPotion);
