@@ -42,7 +42,7 @@ public class Main extends JavaPlugin {
         badOmenRecipe.addIngredient(Material.BONE);
         badOmenRecipe.addIngredient(Material.GUNPOWDER);
         badOmenRecipe.addIngredient(Material.ENDER_EYE);
-        badOmenRecipe.addIngredient(Material.BLAZE_ROD);
+        badOmenRecipe.addIngredient(Material.MAGMA_CREAM);
         badOmenRecipe.addIngredient(Material.NETHERITE_INGOT);
         badOmenRecipe.addIngredient(Material.GHAST_TEAR);
         badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
