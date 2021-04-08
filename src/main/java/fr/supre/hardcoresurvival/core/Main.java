@@ -2,7 +2,16 @@ package fr.supre.hardcoresurvival.core;
 
 import fr.supre.hardcoresurvival.commands.CommandHardcore;
 import fr.supre.hardcoresurvival.listeners.Listeners;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Main extends JavaPlugin {
     public ConfigManager cfmg;
@@ -16,11 +25,23 @@ public class Main extends JavaPlugin {
         getCommand("tpto").setExecutor(new CommandHardcore(this));
         getCommand("start").setExecutor(new CommandHardcore(this));
 
+        //Recipe (Can be disabled and modified in the completed version of this plugin)
+        PotionMeta badOmenMeta = null;
+        badOmenMeta.addCustomEffect(new PotionEffect(PotionEffectType.BAD_OMEN, Integer.MAX_VALUE, 2), true);
+        badOmenMeta.setColor(Color.fromRGB(95,53,116));
+        ItemStack badOmenPotion = new ItemStack(Material.POTION);
+        badOmenPotion.setItemMeta(badOmenMeta);
 
-        //TODO Gérer la mort du joueur: Sa tombe, spectateur
-        //TODO /revive
-        //TODO Créer une commande de démmarrage avec un tp au quatre coin de la map
-
+        ShapelessRecipe badOmenRecipe = new ShapelessRecipe(badOmenPotion);
+        badOmenRecipe.addIngredient(Material.FERMENTED_SPIDER_EYE);
+        badOmenRecipe.addIngredient(Material.ROTTEN_FLESH);
+        badOmenRecipe.addIngredient(Material.BONE);
+        badOmenRecipe.addIngredient(Material.GUNPOWDER);
+        badOmenRecipe.addIngredient(Material.ENDER_EYE);
+        badOmenRecipe.addIngredient(Material.BLAZE_ROD);
+        badOmenRecipe.addIngredient(Material.NETHERITE_INGOT);
+        badOmenRecipe.addIngredient(Material.GHAST_TEAR);
+        badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
 
     }
 
