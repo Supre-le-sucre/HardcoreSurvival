@@ -46,7 +46,7 @@ public class Listeners implements Listener {
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()+1).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()-1).getBlock().setType(Material.CRACKED_STONE_BRICKS);
         String d  = event.getDeathMessage();
-        event.setDeathMessage("§6"+ p.getName() + " §c"+d+" §e en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §epaix a son âme...");
+        event.setDeathMessage("§c"+d+"§e en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §epaix a son âme...");
         p.setGameMode(GameMode.SPECTATOR);
     }
     @EventHandler
