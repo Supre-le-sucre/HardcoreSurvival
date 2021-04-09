@@ -1,16 +1,14 @@
 package fr.supre.hardcoresurvival.core;
 
-import com.mojang.authlib.GameProfile;
 import fr.supre.hardcoresurvival.commands.CommandHardcore;
 import fr.supre.hardcoresurvival.listeners.Listeners;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -37,7 +35,7 @@ public class Main extends JavaPlugin {
         badOmenPotionMeta.setColor(Color.fromRGB(95,53,116));
         badOmenPotion.setItemMeta(badOmenPotionMeta);
 
-        ShapelessRecipe badOmenRecipe = new ShapelessRecipe(badOmenPotion);
+        ShapelessRecipe badOmenRecipe = new ShapelessRecipe(new NamespacedKey(this, "badOmenRecipe"), badOmenPotion);
         badOmenRecipe.addIngredient(Material.FERMENTED_SPIDER_EYE);
         badOmenRecipe.addIngredient(Material.ROTTEN_FLESH);
         badOmenRecipe.addIngredient(Material.BONE);
@@ -59,6 +57,6 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        System.out.println("§4[§6Hardcore§4] Plus désactivé");
+        System.out.println("§4[§6Hardcore§4] Plugin désactivé");
     }
 }

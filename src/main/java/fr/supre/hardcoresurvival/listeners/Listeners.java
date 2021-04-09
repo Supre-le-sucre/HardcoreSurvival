@@ -1,24 +1,17 @@
 package fr.supre.hardcoresurvival.listeners;
 
-import com.mojang.authlib.GameProfile;
 import fr.supre.hardcoresurvival.core.Main;
-import net.minecraft.server.v1_16_R3.EntityPlayer;
-import net.minecraft.server.v1_16_R3.MinecraftServer;
-import net.minecraft.server.v1_16_R3.PlayerInteractManager;
-import net.minecraft.server.v1_16_R3.WorldServer;
+
 import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_16_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 //Créé quasi entièrement par Bistouri
@@ -69,7 +62,8 @@ public class Listeners implements Listener {
             @Override
             public void run() {
                 s++;
-                if(s == 8) {
+                if(s == 10) {
+                    Stream<Player> all = getConnectedPlayers().stream();
                     all.forEach((pl -> pl.stopSound(Sound.MUSIC_DISC_WARD)));
                     cancel();
                 }
