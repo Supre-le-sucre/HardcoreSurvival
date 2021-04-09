@@ -1,5 +1,6 @@
 package fr.supre.hardcoresurvival.core;
 
+import com.mojang.authlib.GameProfile;
 import fr.supre.hardcoresurvival.commands.CommandHardcore;
 import fr.supre.hardcoresurvival.listeners.Listeners;
 import org.bukkit.Color;
@@ -48,6 +49,7 @@ public class Main extends JavaPlugin {
         badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
 
         getServer().addRecipe(badOmenRecipe);
+
 
     }
 
