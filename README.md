@@ -16,4 +16,4 @@ Le plugin sera probablement mis sur spigot avec une meilleure capacité de confi
 
 Known issue:
 
-Aucune ! N'hésitez pas à envoyer les problèmes dans "issues" !
+Aucune ! Envoyez les sur "issues"

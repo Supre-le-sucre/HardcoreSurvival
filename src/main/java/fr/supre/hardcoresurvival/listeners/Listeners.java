@@ -1,18 +1,23 @@
 package fr.supre.hardcoresurvival.listeners;
 
-import fr.supre.hardcoresurvival.core.ConfigManager;
 import fr.supre.hardcoresurvival.core.Main;
-import io.papermc.paper.event.player.AsyncChatEvent;
-import net.kyori.adventure.text.Component;
+
 import org.bukkit.*;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 //Créé quasi entièrement par Bistouri
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Listeners implements Listener {
     static int playerSleeping;
@@ -27,9 +32,8 @@ public class Listeners implements Listener {
         Player p = event.getEntity();
         Location ploc = p.getLocation();
         p.getWorld().playSound(ploc, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 100, 2F);
-        List<String> dataList = main.cfmg.getDatas().getStringList("Datas");
+        List<String> dataList = main.cfmg.getDatas().getStringList("Datas.dead");
         dataList.add(String.valueOf(p.getUniqueId()));
-        main.cfmg.getDatas().getStringList("Datas").add("dead");
         main.cfmg.getDatas().set("Datas.dead", dataList);
         main.cfmg.getDatas().getStringList("Datas").add(String.valueOf(p.getUniqueId()));
         main.cfmg.getDatas().getStringList("Datas."+p.getUniqueId()).add("X");
@@ -47,18 +51,34 @@ public class Listeners implements Listener {
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+3,ploc.getZ()).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()+1).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()-1).getBlock().setType(Material.CRACKED_STONE_BRICKS);
-        event.deathMessage(Component.text("§6"+ p.getName() + " §cest mort en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §cpaix a son âme..."));
+        String d  = event.getDeathMessage();
+        event.setDeathMessage("§c"+d+"§e en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §epaix a son âme...");
         p.setGameMode(GameMode.SPECTATOR);
+        Stream<Player> all = getConnectedPlayers().stream();
+        all.forEach((pl) -> pl.playSound(pl.getLocation(), Sound.MUSIC_DISC_WARD, 100, 1F));
+        BukkitTask music = new BukkitRunnable()
+        {
+            int s = 0;
+            @Override
+            public void run() {
+                s++;
+                if(s == 10) {
+                    Stream<Player> all = getConnectedPlayers().stream();
+                    all.forEach((pl -> pl.stopSound(Sound.MUSIC_DISC_WARD)));
+                    cancel();
+                }
+            }
+        }.runTaskTimer(this.main, 0, 20);
     }
     @EventHandler
     public void onSleeping(PlayerBedEnterEvent event) {
         if (!event.isCancelled()) {
             playerSleeping++;
-            Bukkit.broadcastMessage("§a" + event.getPlayer().getName() + " §eest en train de dormir ! §c§lAU DODO ! \n \n§eIl y a §a" + playerSleeping + " §6/ §c" + Bukkit.getServer().getOnlinePlayers().size() + "§e qui font dodo...");
+            Bukkit.broadcastMessage("§a" + event.getPlayer().getName() + " §eest en train de dormir ! §c§lAU DODO ! \n \n§eIl y a §a" + playerSleeping + " §6/ §c" + getNumberOfRequiredSleep() + "§e qui font dodo...");
         }
     }
     @EventHandler
-    public void onChat(AsyncChatEvent event) {
+    public void onChat(AsyncPlayerChatEvent event) {
         if(!event.getPlayer().hasPermission("hardcore.chat")) {
             event.setCancelled(true);
             event.getPlayer().sendMessage("§c§lLa communication sur le tchat est désactivée !");
@@ -67,7 +87,7 @@ public class Listeners implements Listener {
     @EventHandler
     public void onNotSleeping(PlayerBedLeaveEvent event) {
         playerSleeping--;
-        Bukkit.broadcastMessage("§c"+ event.getPlayer().getName() + " §ene dors plus...\n \n§eIl y a §a" + playerSleeping + " §6/ §c" + Bukkit.getServer().getOnlinePlayers().size() + "§e qui font dodo...");
+        Bukkit.broadcastMessage("§c"+ event.getPlayer().getName() + " §ene dors plus...\n \n§eIl y a §a" + playerSleeping + " §6/ §c" + getNumberOfRequiredSleep() + "§e qui font dodo...");
     }
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
@@ -109,4 +129,22 @@ public class Listeners implements Listener {
            }
         }
     }
+    int getNumberOfRequiredSleep() {
+        int n = 0;
+        ArrayList<Player> Online =  new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
+        int total = Online.size();
+        for(int i=0; i<Online.size(); i++) {
+            if(Online.get(i).getGameMode().equals(GameMode.SPECTATOR)) n++;
+            else if(!Online.get(i).getWorld().getEnvironment().equals(World.Environment.NORMAL)) n++;
+
+        }
+        return total-n;
+    }
+
+    ArrayList<Player> getConnectedPlayers() {
+        ArrayList<Player> connected = new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
+        return connected;
+    }
+
+
 }

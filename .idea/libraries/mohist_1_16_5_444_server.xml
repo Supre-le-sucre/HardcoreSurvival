@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mohist-1.16.5-444-server">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../Libraries/mohist-1.16.5-444-server.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

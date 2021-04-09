@@ -2,8 +2,16 @@ package fr.supre.hardcoresurvival.core;
 
 import fr.supre.hardcoresurvival.commands.CommandHardcore;
 import fr.supre.hardcoresurvival.listeners.Listeners;
+import org.bukkit.Color;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.units.qual.C;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class Main extends JavaPlugin {
     public ConfigManager cfmg;
@@ -17,10 +25,28 @@ public class Main extends JavaPlugin {
         getCommand("tpto").setExecutor(new CommandHardcore(this));
         getCommand("start").setExecutor(new CommandHardcore(this));
 
+        //Recipe (Can be disabled and modified in the completed version of this plugin)
+        ItemStack badOmenPotion = new ItemStack(Material.POTION);
+        ItemMeta badOmenPotionName = badOmenPotion.getItemMeta();
+        badOmenPotionName.setDisplayName("§5§lBad Omen III §d§lPotion");
+        badOmenPotion.setItemMeta(badOmenPotionName);
+        PotionMeta badOmenPotionMeta = (PotionMeta) badOmenPotion.getItemMeta();
+        badOmenPotionMeta.addCustomEffect(new PotionEffect(PotionEffectType.BAD_OMEN, Integer.MAX_VALUE, 2), true);
+        badOmenPotionMeta.setColor(Color.fromRGB(95,53,116));
+        badOmenPotion.setItemMeta(badOmenPotionMeta);
 
-        //TODO Gérer la mort du joueur: Sa tombe, spectateur
-        //TODO /revive
-        //TODO Créer une commande de démmarrage avec un tp au quatre coin de la map
+        ShapelessRecipe badOmenRecipe = new ShapelessRecipe(new NamespacedKey(this, "badOmenRecipe"), badOmenPotion);
+        badOmenRecipe.addIngredient(Material.FERMENTED_SPIDER_EYE);
+        badOmenRecipe.addIngredient(Material.ROTTEN_FLESH);
+        badOmenRecipe.addIngredient(Material.BONE);
+        badOmenRecipe.addIngredient(Material.GUNPOWDER);
+        badOmenRecipe.addIngredient(Material.ENDER_EYE);
+        badOmenRecipe.addIngredient(Material.MAGMA_CREAM);
+        badOmenRecipe.addIngredient(Material.NETHERITE_INGOT);
+        badOmenRecipe.addIngredient(Material.GHAST_TEAR);
+        badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
+
+        getServer().addRecipe(badOmenRecipe);
 
 
     }
@@ -31,6 +57,6 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        System.out.println("§4[§6Hardcore§4] Plus désactivé");
+        System.out.println("§4[§6Hardcore§4] Plugin désactivé");
     }
 }
