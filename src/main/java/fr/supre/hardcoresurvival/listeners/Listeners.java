@@ -52,7 +52,8 @@ public class Listeners implements Listener {
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()+1).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()-1).getBlock().setType(Material.CRACKED_STONE_BRICKS);
         String d  = event.getDeathMessage();
-        event.setDeathMessage("§c"+d+"§e en §6X:" + p.getLocation().getBlockX()+ " §6Y:" + p.getLocation().getBlockY() +" §6Z:"+ p.getLocation().getBlockZ() + " §epaix a son âme...");
+        if(event.getEntity().getLocation().getBlockY() < 0) event.setDeathMessage(main.getConfig().getString("Messages.notify-death-void").replace("%player%", p.getName()).replace("%x%", String.valueOf(ploc.getBlockX())).replace("%y%", String.valueOf(ploc.getBlockY())).replace("%z%", String.valueOf(ploc.getBlockZ())).replace("%death-message%", d));
+        else event.setDeathMessage(main.getConfig().getString("Messages.notify-death").replace("%player%", p.getName()).replace("%x%", String.valueOf(ploc.getBlockX())).replace("%y%", String.valueOf(ploc.getBlockY())).replace("%z%", String.valueOf(ploc.getBlockZ())).replace("%death-message%", d));
         p.setGameMode(GameMode.SPECTATOR);
         Stream<Player> all = getConnectedPlayers().stream();
         all.forEach((pl) -> pl.playSound(pl.getLocation(), Sound.MUSIC_DISC_WARD, 100, 1F));
@@ -74,7 +75,7 @@ public class Listeners implements Listener {
     public void onSleeping(PlayerBedEnterEvent event) {
         if (!event.isCancelled()) {
             playerSleeping++;
-            Bukkit.broadcastMessage("§a" + event.getPlayer().getName() + " §eest en train de dormir ! §c§lAU DODO ! \n \n§eIl y a §a" + playerSleeping + " §6/ §c" + getNumberOfRequiredSleep() + "§e qui font dodo...");
+            Bukkit.broadcastMessage((main.getConfig().getString("Messages.notify-sleep").replace("%player%", event.getPlayer().getName()).replace("%sleeping%", String.valueOf(playerSleeping)).replace("%player%", event.getPlayer().getName()).replace("%needed%", String.valueOf(getNumberOfRequiredSleep()))));
         }
     }
     @EventHandler
@@ -87,7 +88,7 @@ public class Listeners implements Listener {
     @EventHandler
     public void onNotSleeping(PlayerBedLeaveEvent event) {
         playerSleeping--;
-        Bukkit.broadcastMessage("§c"+ event.getPlayer().getName() + " §ene dors plus...\n \n§eIl y a §a" + playerSleeping + " §6/ §c" + getNumberOfRequiredSleep() + "§e qui font dodo...");
+        Bukkit.broadcastMessage((main.getConfig().getString("Messages.notify-unsleep").replace("%player%", event.getPlayer().getName()).replace("%sleeping%", String.valueOf(playerSleeping)).replace("%player%", event.getPlayer().getName()).replace("%needed%", String.valueOf(getNumberOfRequiredSleep()))));
     }
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
@@ -107,12 +108,12 @@ public class Listeners implements Listener {
                         }
                     }
                     if(p == null){
-                        event.getPlayer().sendMessage("§c§lTu ne peux pas revive quelqu'un d'offline");
+                        event.getPlayer().sendMessage(main.getConfig().getString("Messages.offline"));
                         return;
                     }else{
                         p.teleport(deathLoc);
                         p.setGameMode(GameMode.SURVIVAL);
-                        Bukkit.getServer().broadcastMessage("§2"+p.getName()+" §eest revenu d'entre les morts grâce à §d" + event.getPlayer().getName());
+                        Bukkit.getServer().broadcastMessage(main.getConfig().getString("Messages.notify-revive").replace("%reviver%", event.getPlayer().getName()).replace("%revived%", p.getName()));
                         p.getWorld().spawnParticle(Particle.SPELL_WITCH, event.getItemDrop().getLocation(), 150);
                         p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, event.getItemDrop().getLocation(), 50);
                         p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, event.getItemDrop().getLocation(), 75);

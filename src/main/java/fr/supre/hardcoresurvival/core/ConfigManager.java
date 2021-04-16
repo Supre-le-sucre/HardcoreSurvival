@@ -19,12 +19,12 @@ public class ConfigManager {
         }
         dataFile = new File(main.getDataFolder(),"data.yml");
         if(!dataFile.exists()) {
-            System.out.println("data.yml n'existe pas, création...");
+            System.out.println("[Hardcore] data.yml does not exist ! Creating...");
             try {
                 dataFile.createNewFile();
-                System.out.println("data.yml créé");
+                System.out.println("[Hardcore] data.yml was created successfully");
             }catch(IOException e){
-                Bukkit.getServer().getConsoleSender().sendMessage("Impossible de créer le fichier ");
+                Bukkit.getServer().getConsoleSender().sendMessage("[Hardcore] data.yml could not be created... Is all writing permissions were set successfully ? Check the exception Stack Trace for more info.");
                 e.printStackTrace();
             }
         }
@@ -40,7 +40,8 @@ public class ConfigManager {
         try {
             datas.save(dataFile);
         }catch(IOException e) {
-            System.out.println("datas.yml n'est pas sauvergardé");
+            System.out.println("[Hardcore] data.yml could not be saved... Is all writing permissions were set successfully ? Check the exception Stack Trace for more info.");
+            e.printStackTrace();
         }
     }
 

@@ -15,38 +15,43 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Main extends JavaPlugin {
     public ConfigManager cfmg;
+    public NamespacedKey keyBadOmenRecipe = new NamespacedKey(this, "badOmenRecipe");
 
     public void onEnable() {
         loadConfigManager();
-        System.out.println("§4[§6Hardcore§4] §2Plugin lancé §4Bonne chance >:3");
+        saveDefaultConfig();
+        System.out.println("§4[§6Hardcore§4] §2Plugin has started §4Good luck >:3");
         getServer().getPluginManager().registerEvents(new Listeners(this), this);
         getCommand("revive").setExecutor(new CommandHardcore(this));
         getCommand("sacrifice").setExecutor(new CommandHardcore(this));
         getCommand("tpto").setExecutor(new CommandHardcore(this));
         getCommand("start").setExecutor(new CommandHardcore(this));
+        getCommand("hardcorereload").setExecutor(new CommandHardcore(this));
 
         //Recipe (Can be disabled and modified in the completed version of this plugin)
-        ItemStack badOmenPotion = new ItemStack(Material.POTION);
-        ItemMeta badOmenPotionName = badOmenPotion.getItemMeta();
-        badOmenPotionName.setDisplayName("§5§lBad Omen III §d§lPotion");
-        badOmenPotion.setItemMeta(badOmenPotionName);
-        PotionMeta badOmenPotionMeta = (PotionMeta) badOmenPotion.getItemMeta();
-        badOmenPotionMeta.addCustomEffect(new PotionEffect(PotionEffectType.BAD_OMEN, Integer.MAX_VALUE, 2), true);
-        badOmenPotionMeta.setColor(Color.fromRGB(95,53,116));
-        badOmenPotion.setItemMeta(badOmenPotionMeta);
+        if(this.getConfig().getBoolean("Gameplay.Recipe.craft-bad-omen")) {
+            ItemStack badOmenPotion = new ItemStack(Material.POTION);
+            ItemMeta badOmenPotionName = badOmenPotion.getItemMeta();
+            badOmenPotionName.setDisplayName(this.getConfig().getString("Gameplay.Recipe.bad-omen-name"));
+            badOmenPotion.setItemMeta(badOmenPotionName);
+            PotionMeta badOmenPotionMeta = (PotionMeta) badOmenPotion.getItemMeta();
+            badOmenPotionMeta.addCustomEffect(new PotionEffect(PotionEffectType.BAD_OMEN, Integer.MAX_VALUE, this.getConfig().getInt("Gameplay.Recipe.bad-omen-level") - 1), true);
+            badOmenPotionMeta.setColor(Color.fromRGB(this.getConfig().getInt("Gameplay.Recipe.bad-omen-color.R"), this.getConfig().getInt("Gameplay.Recipe.bad-omen-color.G"), this.getConfig().getInt("Gameplay.Recipe.bad-omen-color.B")));
+            badOmenPotion.setItemMeta(badOmenPotionMeta);
 
-        ShapelessRecipe badOmenRecipe = new ShapelessRecipe(new NamespacedKey(this, "badOmenRecipe"), badOmenPotion);
-        badOmenRecipe.addIngredient(Material.FERMENTED_SPIDER_EYE);
-        badOmenRecipe.addIngredient(Material.ROTTEN_FLESH);
-        badOmenRecipe.addIngredient(Material.BONE);
-        badOmenRecipe.addIngredient(Material.GUNPOWDER);
-        badOmenRecipe.addIngredient(Material.ENDER_EYE);
-        badOmenRecipe.addIngredient(Material.MAGMA_CREAM);
-        badOmenRecipe.addIngredient(Material.NETHERITE_INGOT);
-        badOmenRecipe.addIngredient(Material.GHAST_TEAR);
-        badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
+            ShapelessRecipe badOmenRecipe = new ShapelessRecipe(keyBadOmenRecipe, badOmenPotion);
+            badOmenRecipe.addIngredient(Material.FERMENTED_SPIDER_EYE);
+            badOmenRecipe.addIngredient(Material.ROTTEN_FLESH);
+            badOmenRecipe.addIngredient(Material.BONE);
+            badOmenRecipe.addIngredient(Material.GUNPOWDER);
+            badOmenRecipe.addIngredient(Material.ENDER_EYE);
+            badOmenRecipe.addIngredient(Material.MAGMA_CREAM);
+            badOmenRecipe.addIngredient(Material.NETHERITE_INGOT);
+            badOmenRecipe.addIngredient(Material.GHAST_TEAR);
+            badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
 
-        getServer().addRecipe(badOmenRecipe);
+            getServer().addRecipe(badOmenRecipe);
+        }
 
 
     }
@@ -57,6 +62,6 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        System.out.println("§4[§6Hardcore§4] Plugin désactivé");
+        System.out.println("§4[§6Hardcore§4] Plugin disabled");
     }
 }
