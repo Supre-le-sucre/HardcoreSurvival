@@ -80,9 +80,9 @@ public class Listeners implements Listener {
     }
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
-        if(!event.getPlayer().hasPermission("hardcore.chat")) {
+        if(main.getConfig().getBoolean("Gameplay.Chat.disable") && !event.getPlayer().hasPermission("hardcore.chat")) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage("§c§lLa communication sur le tchat est désactivée !");
+            event.getPlayer().sendMessage(main.getConfig().getString("Gameplay.Chat.no-chat").replace("%player%", event.getPlayer().getName()));
         }
     }
     @EventHandler
