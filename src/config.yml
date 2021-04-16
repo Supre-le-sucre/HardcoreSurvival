@@ -10,7 +10,20 @@ Gameplay:
     #Player will be teleported on the corners of the map associated to the integer you have set
     #Original value was: 2500
     spawn-in: 2500
+    
+  #This category modify how the chat works
+  Chat:
+    #Decide whether or not chat would be disabled for any player who doesn't have the hardcore.chat permission
+    #Value can only be "true" for yes, or "false" for no (you may not write those -> ")
+    #Original value was: true
+    disable: true
 
+    #What should the message be to notify a player that he can't speak throughout chat ?
+    #The value should be between -> " and can contain "§" to use minecraft color codes
+    #You can use the placeholder: %player% to show the player concerned
+    #Original value was: "§cChat has been disabled !"
+    no-chat: "§cChat has been disabled !"
+    
   #This category will affect the added crafting recipes
   Recipe:
     #Decide whether or not the craft of the bad omen potion should be enabled
