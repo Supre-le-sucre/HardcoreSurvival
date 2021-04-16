@@ -5,10 +5,12 @@ main: fr.supre.hardcoresurvival.core.Main
 api-version: 1.16
 commands:
   revive:
-    description: revive un joueur
+    description: revive a dead player
   sacrifice:
-    description: se sacrifier pour un totem
+    description: sacrfice yourself to spawn a totem
   tpto:
-    description: se teleporter a qqn quand on a dead ca
+    description: teleport to a pleyr when you are dead
   start:
-    description: start la game
+    description: start the game
+  hardcorereload:
+    description: reload the plugin
