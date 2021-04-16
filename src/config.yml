@@ -1,0 +1,148 @@
+#This is the base config of the plugin
+#This plugin was coded by Supre with the help of Bistouri
+
+#This category will impact the gameplay of the plugin
+Gameplay:
+  #This category modify how the game starts
+  Start:
+    #Decide how far the player should start from 0 0 using /start
+    #Value can be a positive integer
+    #Player will be teleported on the corners of the map associated to the integer you have set
+    #Original value was: 2500
+    spawn-in: 2500
+
+  #This category will affect the added crafting recipes
+  Recipe:
+    #Decide whether or not the craft of the bad omen potion should be enabled
+    #Value can be "true" for yes, or "false" for no (you may not write those -> ")
+    #Original value was: true
+    craft-bad-omen: true
+
+    #Decide the level of bad omen the potion will have
+    #Value can be a positive integer that cannot exceed 256 and should be over 1 at least
+    #Original value was: 3
+    bad-omen-level: 3
+
+    #Choose the RGB color code of the bad omen potion
+    #Values can be positive integer that cannot exceed 256
+    #Original value were respectively: 95/53/116
+    bad-omen-color:
+      R: 95
+      G: 53
+      B: 116
+
+    #Choose the name of the crafted potion
+    #The value should be between -> " and can contain "§" to use minecraft color codes
+    #Original value was: "§5§lBad Omen III §d§lPotion"
+    bad-omen-name: "§5§lBad Omen III §d§lPotion"
+
+#This category will modify the messages sent by the plugin
+Messages:
+  #What should the message be when a player start the hardcore ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§6[§4Hardcore§6] §cGood Luck ! >:3"
+  start-message: "§6[§4Hardcore§6] §cGood Luck ! >:3"
+
+  #What should the message be to notify a player that he started successfully
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholder: %player% to show the player concerned
+  #Original value was: "§6[§4Hardore§6] §cGame has started for §e%player%"
+  notify-start: "§6[§4Hardore§6] §cGame has started for §e%player%"
+
+  #What should the message be to notify players of a sacrifice ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholder: %player% to show the player concerned
+  #Original value was: "§6[§4Hardore§6] §4%player% §6has sacrificed himself for a totem of undying"
+  notify-sacrifice: "§6[§4Hardore§6] §4%player% §6has sacrificed himself for a totem of undying"
+
+  #What should the message be to notify players that someone is sleeping ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholders:
+  # - %player% to show the player concerned
+  # - %sleeping% to show the number of sleeping players
+  # - %needed% to show the number of the required player to sleep
+  #Original value was: "§a%player% §6is sleeping ! §e(§a%sleeping%§6/§c%needed%§e)"
+  notify-sleep: "§a%player% §6is sleeping ! §e(§a%sleeping%§6/§c%needed%§e)"
+
+  #What should the message be to notify players that someone is not sleeping anymore ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholders:
+  # - %player% to show the player concerned
+  # - %sleeping% to show the number of sleeping players
+  # - %needed% to show the number of the required player to sleep
+  #Original value was: "§c%player% §6is not sleeping anymore ! §e(§a%sleeping%§6/§c%needed%§e)"
+  notify-unsleep: "§c%player% §6is not sleeping anymore ! §e(§a%sleeping%§6/§c%needed%§e)"
+
+  #What should the message be to notify players that someone is dead ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholders:
+  # - %player% to show the player concerned
+  # - %death-message% to show death message
+  # - %x% to show x coordinate
+  # - %y% to show y coordinate
+  # - %z% to show z coordinate
+  #Original value was: "§6%player% §cis dead at §6X:§e%x% §6Y:§e%y% §6Z:§e%z% §cRIP in peace"
+  notify-death: "§6%player% §cis dead at §6X:§e%x% §6Y:§e%y% §6Z:§e%z% §cRIP in peace"
+
+  #What should the message be to notify players that someone is dead in the void ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholders:
+  # - %player% to show the player concerned
+  # - %death-message% to show death message
+  # - %x% to show x coordinate
+  # - %y% to show y coordinate
+  # - %z% to show z coordinate
+  #Original value was: "§6%player% §cis dead from the void at §6X:§e%x% §6Y:§e%y% §6Z:§e%z% §cRIP in peace (forever)"
+  notify-death-void: "§6%player% §cis dead from the void at §6X:§e%x% §6Y:§e%y% §6Z:§e%z% §cRIP in peace (forever)"
+
+  #What should the message be to notify players that someone is revived
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholders:
+  # - %reviver% to show the player who revived
+  # - %revived% to show the player that
+  #Original value was: "§2%reviver% §ejust revived §d%revived% §ewelcome back !"
+  notify-revive: "§2%reviver% §ejust revived §d%revived% §ewelcome back !"
+
+  #What should the message be when a player does not have the required permission to perform a command ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #You can use the placeholder: %perm% to show the permissions required
+  #Original value was: "§cYou don't have the %perm% permission to perform this command"
+  no-permission: "§cYou don't have the %perm% permission to perform this command"
+
+  #What should the message be when a player is offline while an action is done on him ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cPlayer is offline !"
+  offline: "§cPlayer is offline !"
+
+  #What should the message be when a player is /revive when he is still alive ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cPlayer is still alive !"
+  alive: "§cPlayer is still alive !"
+
+  #What should the message be when a player misused /revive
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cYou need to specify a player ! /revive <player>"
+  revive-syntax: "§cYou need to specify a player ! /revive <player>"
+
+  #What should the message be when a player alive use the /tpto command ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cYou need to be dead to perform this command !"
+  tpto-alive: "§cYou need to be dead to perform this command !"
+
+  #What should the message be when a player misused /tpto
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cYou need to specify a player ! /tpto <player>"
+  tpto-syntax: "§cYou need to specify a player ! /tpto <player>"
+
+  #What should the message be when a dead player use the /sacrifice command ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cYou need to be alive to perform this command !"
+  sacrifice-dead: "§cYou need to be alive to perform this command !"
+
+  #What should the message be when a player use the /reload command ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cYou need to be alive to perform this command !"
+  reload: "§aConfig reloaded"
+
+
+
