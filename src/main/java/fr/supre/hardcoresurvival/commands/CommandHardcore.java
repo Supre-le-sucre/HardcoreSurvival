@@ -104,7 +104,7 @@ public class CommandHardcore implements CommandExecutor {
                                 p.sendMessage(main.getConfig().getString("Messages.notify-start").replace("%player%", target.getName()));
                                 target.sendMessage(main.getConfig().getString("Messages.start-message"));
                             } else
-                                p.sendMessage("§c§lVous ne pouvez pas faire commencer le jeu à un joueur hors-ligne");
+                                p.sendMessage(main.getConfig().getString("Messages.offline"));
                         }
 
                     }
