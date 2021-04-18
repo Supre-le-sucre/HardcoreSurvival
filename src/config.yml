@@ -10,7 +10,7 @@ Gameplay:
     #Player will be teleported on the corners of the map associated to the integer you have set
     #Original value was: 2500
     spawn-in: 2500
-    
+
   #This category modify how the chat works
   Chat:
     #Decide whether or not chat would be disabled for any player who doesn't have the hardcore.chat permission
@@ -23,7 +23,7 @@ Gameplay:
     #You can use the placeholder: %player% to show the player concerned
     #Original value was: "§cChat has been disabled !"
     no-chat: "§cChat has been disabled !"
-    
+
   #This category will affect the added crafting recipes
   Recipe:
     #Decide whether or not the craft of the bad omen potion should be enabled
@@ -49,6 +49,21 @@ Gameplay:
     #Original value was: "§5§lBad Omen III §d§lPotion"
     bad-omen-name: "§5§lBad Omen III §d§lPotion"
 
+    #Choose the materials needed to craft the Potion
+    #Order does not matter because it is a shapeless recipes#you may not add up to 9 materials
+    #Materials are listed here if you have some troubleshooting finding the name: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+    #Original value were: fermented_spider_eye / gunpowder / magma_cream / ender_eye / netherite_ingot / glass_bottle / bone / rotten_flesh / ghast_tear
+    materials:
+      - fermented_spider_eye
+      - gunpowder
+      - magma_cream
+      - ender_eye
+      - netherite_ingot
+      - glass_bottle
+      - bone
+      - rotten_flesh
+      - ghast_tear
+
 #This category will modify the messages sent by the plugin
 Messages:
   #What should the message be when a player start the hardcore ?
@@ -61,6 +76,7 @@ Messages:
   #You can use the placeholder: %player% to show the player concerned
   #Original value was: "§6[§4Hardore§6] §cGame has started for §e%player%"
   notify-start: "§6[§4Hardore§6] §cGame has started for §e%player%"
+
 
   #What should the message be to notify players of a sacrifice ?
   #The value should be between -> " and can contain "§" to use minecraft color codes
@@ -156,6 +172,3 @@ Messages:
   #The value should be between -> " and can contain "§" to use minecraft color codes
   #Original value was: "§cYou need to be alive to perform this command !"
   reload: "§aConfig reloaded"
-
-
-
