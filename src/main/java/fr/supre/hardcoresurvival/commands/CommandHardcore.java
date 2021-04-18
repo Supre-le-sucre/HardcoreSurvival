@@ -156,17 +156,19 @@ public class CommandHardcore implements CommandExecutor {
                         badOmenPotion.setItemMeta(badOmenPotionMeta);
 
                         ShapelessRecipe badOmenRecipe = new ShapelessRecipe(main.keyBadOmenRecipe, badOmenPotion);
-                        badOmenRecipe.addIngredient(Material.FERMENTED_SPIDER_EYE);
-                        badOmenRecipe.addIngredient(Material.ROTTEN_FLESH);
-                        badOmenRecipe.addIngredient(Material.BONE);
-                        badOmenRecipe.addIngredient(Material.GUNPOWDER);
-                        badOmenRecipe.addIngredient(Material.ENDER_EYE);
-                        badOmenRecipe.addIngredient(Material.MAGMA_CREAM);
-                        badOmenRecipe.addIngredient(Material.NETHERITE_INGOT);
-                        badOmenRecipe.addIngredient(Material.GHAST_TEAR);
-                        badOmenRecipe.addIngredient(Material.GLASS_BOTTLE);
-
-                        Bukkit.getServer().addRecipe(badOmenRecipe);
+                        if(main.getConfig().getList("Gameplay.Recipe.materials").size()<=9) {
+                            for (int i = 0; i < main.getConfig().getList("Gameplay.Recipe.materials").size(); i++) {
+                                Material mat = Material.getMaterial(main.getConfig().getStringList("Gameplay.Recipe.materials").get(i).toUpperCase());
+                                if (mat == null) {
+                                    System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + main.getConfig().getStringList("Gameplay.Recipe.materials").get(i) + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
+                                    p.sendMessage("§4[§6Hardcore§4] §cError while loading configuration, material: §6" + main.getConfig().getStringList("Gameplay.Recipe.materials").get(i) + " §cis not a proper material and cannot be added to the craft of the bad omen potion \n §cConsider fix this error or this may result to an invalid craft");
+                                } else badOmenRecipe.addIngredient(mat);
+                            }
+                            Bukkit.getServer().addRecipe(badOmenRecipe);
+                        } else {
+                            System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, too many materials are indicated to craft the bad omen potion, only 9 or less can be written, craft has been disabled");
+                            p.sendMessage("§4[§6Hardcore§4] §cError while loading configuration, too many materials are indicated to craft the bad omen potion, only 9 or less can be written, craft has been disabled");
+                        }
                     }
                     p.sendMessage(main.getConfig().getString("Messages.reload"));
 
