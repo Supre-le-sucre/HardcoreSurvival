@@ -157,11 +157,11 @@ public class CommandHardcore implements CommandExecutor {
 
                         ShapelessRecipe badOmenRecipe = new ShapelessRecipe(main.keyBadOmenRecipe, badOmenPotion);
                         if(main.getConfig().getList("Gameplay.Recipe.materials").size()<=9) {
-                            for (int i = 0; i < main.getConfig().getList("Gameplay.Recipe.materials").size(); i++) {
-                                Material mat = Material.getMaterial(main.getConfig().getStringList("Gameplay.Recipe.materials").get(i).toUpperCase());
+                            for (String s: main.getConfig().getStringList("Gameplay.Recipe.materials")) {
+                                Material mat = Material.getMaterial(s.toUpperCase());
                                 if (mat == null) {
-                                    System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + main.getConfig().getStringList("Gameplay.Recipe.materials").get(i) + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
-                                    p.sendMessage("§4[§6Hardcore§4] §cError while loading configuration, material: §6" + main.getConfig().getStringList("Gameplay.Recipe.materials").get(i) + " §cis not a proper material and cannot be added to the craft of the bad omen potion \n §cConsider fix this error or this may result to an invalid craft");
+                                    System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
+                                    p.sendMessage("§4[§6Hardcore§4] §cError while loading configuration, material: §6" + s + " §cis not a proper material and cannot be added to the craft of the bad omen potion \n §cConsider fix this error or this may result to an invalid craft");
                                 } else badOmenRecipe.addIngredient(mat);
                             }
                             Bukkit.getServer().addRecipe(badOmenRecipe);
