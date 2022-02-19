@@ -8,15 +8,25 @@ Gameplay:
     #Define if the game has started or not
     #Value can only be "true" or "false" without the "
     status: false
-    #Define if PvP should be enabled or not
-    #Value can only be "true" or "false" without the "
-    #Original value was: true
-    PvP: true
     #Decide how far the player should start from 0 0 using /start
     #Value can be a positive integer
     #Player will be teleported on the corners of the map associated to the integer you have set
     #Original value was: 2500
     spawn-in: 2500
+
+  Experience:
+    #Define if PvP should be enabled or not
+    #Value can only be "true" or "false" without the "
+    #Original value was: true
+    PvP: true
+
+    #Define items that should be allowed to revive players
+    #Materials are listed here if you have some troubleshooting finding the name: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+    #Original value were: totem_of_undying / enchanted_golden_apple
+    revive-items:
+      - totem_of_undying
+      - enchanted_golden_apple
+
 
   #This category modify how the chat works
   Chat:

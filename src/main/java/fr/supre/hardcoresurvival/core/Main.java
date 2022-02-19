@@ -10,11 +10,12 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
-    public ConfigManager cfmg = new ConfigManager();
+    public ConfigManager cfmg;
     public NamespacedKey keyBadOmenRecipe = new NamespacedKey(this, "badOmenRecipe");
 
     public void onEnable() {
@@ -34,7 +35,15 @@ public class Main extends JavaPlugin {
             Bukkit.getWorld("world").setGameRule(GameRule.DO_MOB_SPAWNING, false);
         }
 
+        for (String s : this.getConfig().getStringList("Gameplay.Experience.revive-items")) {
+            Material mat = Material.getMaterial(s.toUpperCase());
+            if(mat == null){
+                Bukkit.getLogger().log(Level.WARNING,"§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the revive items \n §4Consider fixing this error");
+            }
+        }
+
         //Recipe (Can be disabled and modified in the completed version of this plugin)
+
         if(this.getConfig().getBoolean("Gameplay.Recipe.craft-bad-omen")) {
             ItemStack badOmenPotion = new ItemStack(Material.POTION);
             ItemMeta badOmenPotionName = badOmenPotion.getItemMeta();
@@ -50,7 +59,7 @@ public class Main extends JavaPlugin {
                 for (String s: this.getConfig().getStringList("Gameplay.Recipe.materials")) {
                     Material mat = Material.getMaterial(s.toUpperCase());
                     if (mat == null)
-                        Bukkit.getLogger().log(Level.WARNING,"§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
+                        Bukkit.getLogger().log(Level.WARNING,"§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fixing this error or this may result to an invalid craft");
                     else badOmenRecipe.addIngredient(mat);
                 } getServer().addRecipe(badOmenRecipe);
             } else {
@@ -62,10 +71,12 @@ public class Main extends JavaPlugin {
     }
 
     private void loadConfigManager() {
+        cfmg = new ConfigManager();
         cfmg.setup();
     }
 
     public void onDisable() {
+        cfmg = new ConfigManager();
         cfmg.saveDatas();
         saveConfig();
         Bukkit.getLogger().log(Level.INFO,"§4[§6Hardcore§4] Plugin disabled");

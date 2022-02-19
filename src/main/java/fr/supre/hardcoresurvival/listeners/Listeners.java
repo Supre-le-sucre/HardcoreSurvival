@@ -21,6 +21,7 @@ import org.bukkit.scheduler.BukkitTask;
 //Créé quasi entièrement par Bistouri
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 public class Listeners implements Listener {
@@ -96,7 +97,13 @@ public class Listeners implements Listener {
     }
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-       if(event.getItemDrop().getItemStack().equals(new ItemStack(Material.TOTEM_OF_UNDYING))) {
+        Material item = event.getItemDrop().getItemStack().getType();
+        boolean valid = false;
+        for(String s : main.getConfig().getStringList("Gameplay.Experience.revive-items")){
+            Material mat = Material.getMaterial(s.toUpperCase());
+            if (mat != null && item.equals(mat)) { valid = true; }
+        }
+        if(valid) {
            List<String> uuidList = main.cfmg.getDatas().getStringList("Datas.dead");
            for(String s: uuidList){
                int x = main.cfmg.getDatas().getInt("Datas."+s+".X");
@@ -138,7 +145,7 @@ public class Listeners implements Listener {
     @EventHandler
     public void onPvP(EntityDamageByEntityEvent event) {
         if (event.getEntity().hasPermission("hardcore.admin")) { return; }
-        if((!main.getConfig().getBoolean("Gameplay.Start.status") || !main.getConfig().getBoolean("Gameplay.Start.PvP")) && event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+        if((!main.getConfig().getBoolean("Gameplay.Start.status") || !main.getConfig().getBoolean("Gameplay.Experience.PvP")) && event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
             Player p  = (Player) event.getDamager();
             event.setCancelled(true);
             p.sendMessage(main.getConfig().getString("Messages.no-pvp"));
