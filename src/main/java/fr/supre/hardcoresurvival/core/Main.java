@@ -2,9 +2,7 @@ package fr.supre.hardcoresurvival.core;
 
 import fr.supre.hardcoresurvival.commands.CommandHardcore;
 import fr.supre.hardcoresurvival.listeners.Listeners;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -13,6 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.logging.Level;
+
 public class Main extends JavaPlugin {
     public ConfigManager cfmg;
     public NamespacedKey keyBadOmenRecipe = new NamespacedKey(this, "badOmenRecipe");
@@ -20,13 +20,19 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         loadConfigManager();
         saveDefaultConfig();
-        System.out.println("§4[§6Hardcore§4] §2Plugin has started §4Good luck >:3");
+        Bukkit.getLogger().log(Level.INFO, "§4[§6Hardcore§4] §2Plugin has started §4Good luck >:3");
         getServer().getPluginManager().registerEvents(new Listeners(this), this);
         getCommand("revive").setExecutor(new CommandHardcore(this));
         getCommand("sacrifice").setExecutor(new CommandHardcore(this));
         getCommand("tpto").setExecutor(new CommandHardcore(this));
         getCommand("start").setExecutor(new CommandHardcore(this));
         getCommand("hardcorereload").setExecutor(new CommandHardcore(this));
+
+        if(!this.getConfig().getBoolean("Gameplay.Start.status")) {
+            Bukkit.getWorld("world").setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+            Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+            Bukkit.getWorld("world").setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        }
 
         //Recipe (Can be disabled and modified in the completed version of this plugin)
         if(this.getConfig().getBoolean("Gameplay.Recipe.craft-bad-omen")) {
@@ -44,11 +50,11 @@ public class Main extends JavaPlugin {
                 for (String s: this.getConfig().getStringList("Gameplay.Recipe.materials")) {
                     Material mat = Material.getMaterial(s.toUpperCase());
                     if (mat == null)
-                        System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
+                        Bukkit.getLogger().log(Level.WARNING,"§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
                     else badOmenRecipe.addIngredient(mat);
                 } getServer().addRecipe(badOmenRecipe);
             } else {
-                System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, too many materials are indicated to craft the bad omen potion, only 9 or less can be written, craft has been disabled");
+                Bukkit.getLogger().log(Level.SEVERE, "§4[§6Hardcore§4] §4Error while loading configuration, too many materials are indicated to craft the bad omen potion, only 9 or less can be written, craft has been disabled");
             }
         }
 
@@ -61,6 +67,6 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        System.out.println("§4[§6Hardcore§4] Plugin disabled");
+        Bukkit.getLogger().log(Level.INFO,"§4[§6Hardcore§4] Plugin disabled");
     }
 }

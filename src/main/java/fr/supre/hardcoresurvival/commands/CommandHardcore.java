@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
 
 public class CommandHardcore implements CommandExecutor {
 
@@ -31,7 +32,7 @@ public class CommandHardcore implements CommandExecutor {
             //---------------------------------------------------------------------------------------------
             if(cmd.getName().equalsIgnoreCase("revive")) {
                 if (!p.hasPermission("hardcore.revive")) {
-                    p.sendMessage(main.getConfig().getString("Messages.no-permission").replace("%perm%", "hardcore.survival"));
+                    p.sendMessage(main.getConfig().getString("Messages.no-permission").replace("%perm%", "hardcore.revive"));
                 } else {
                     if (args.length != 0) {
                         Player target = Bukkit.getPlayer(args[0]);
@@ -87,6 +88,10 @@ public class CommandHardcore implements CommandExecutor {
                 if (!p.hasPermission("hardcore.start"))
                     p.sendMessage(main.getConfig().getString("Messages.no-permission").replace("%perm%", "hardcore.start"));
                 else {
+                    main.getConfig().set("Gameplay.Start.status", true);
+                    p.getWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, true);
+                    p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
+                    p.getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, true);
                     int definition1 = 0;
                     int definition2 = 1;
                     int definition3 = 2;
@@ -160,13 +165,13 @@ public class CommandHardcore implements CommandExecutor {
                             for (String s: main.getConfig().getStringList("Gameplay.Recipe.materials")) {
                                 Material mat = Material.getMaterial(s.toUpperCase());
                                 if (mat == null) {
-                                    System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
+                                    Bukkit.getLogger().log(Level.WARNING,"§4[§6Hardcore§4] §4Error while loading configuration, material: §6" + s + " §4is not a proper material and cannot be added to the craft of the bad omen potion \n §4Consider fix this error or this may result to an invalid craft");
                                     p.sendMessage("§4[§6Hardcore§4] §cError while loading configuration, material: §6" + s + " §cis not a proper material and cannot be added to the craft of the bad omen potion \n §cConsider fix this error or this may result to an invalid craft");
                                 } else badOmenRecipe.addIngredient(mat);
                             }
                             Bukkit.getServer().addRecipe(badOmenRecipe);
                         } else {
-                            System.out.println("§4[§6Hardcore§4] §4Error while loading configuration, too many materials are indicated to craft the bad omen potion, only 9 or less can be written, craft has been disabled");
+                            Bukkit.getLogger().log(Level.SEVERE,"§4[§6Hardcore§4] §4Error while loading configuration, too many materials are indicated to craft the bad omen potion, only 9 or less can be written, craft has been disabled");
                             p.sendMessage("§4[§6Hardcore§4] §cError while loading configuration, too many materials are indicated to craft the bad omen potion, only 9 or less can be written, craft has been disabled");
                         }
                     }

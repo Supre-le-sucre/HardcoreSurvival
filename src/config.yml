@@ -5,6 +5,13 @@
 Gameplay:
   #This category modify how the game starts
   Start:
+    #Define if the game has started or not
+    #Value can only be "true" or "false" without the "
+    status: false
+    #Define if PvP should be enabled or not
+    #Value can only be "true" or "false" without the "
+    #Original value was: true
+    PvP: true
     #Decide how far the player should start from 0 0 using /start
     #Value can be a positive integer
     #Player will be teleported on the corners of the map associated to the integer you have set
@@ -137,6 +144,16 @@ Messages:
   #You can use the placeholder: %perm% to show the permissions required
   #Original value was: "§cYou don't have the %perm% permission to perform this command"
   no-permission: "§cYou don't have the %perm% permission to perform this command"
+
+  #What should the message be when a player is not allowed to perform an action because the game hasn't started yet ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cYou can't do that yet ! Wait for the game to start !"
+  no-start: "§cYou can't do that yet ! Wait for the game to start !"
+
+  #What should the message be when a player is not allowed to PvP ?
+  #The value should be between -> " and can contain "§" to use minecraft color codes
+  #Original value was: "§cPvP is not enabled !"
+  no-pvp: "§cPvP is not enabled !"
 
   #What should the message be when a player is offline while an action is done on him ?
   #The value should be between -> " and can contain "§" to use minecraft color codes

@@ -1,6 +1,7 @@
 package fr.supre.hardcoresurvival.core;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -19,12 +20,12 @@ public class ConfigManager {
         }
         dataFile = new File(main.getDataFolder(),"data.yml");
         if(!dataFile.exists()) {
-            System.out.println("[Hardcore] data.yml does not exist ! Creating...");
+            Bukkit.getLogger().log(Level.INFO,"[Hardcore] data.yml does not exist ! Creating...");
             try {
                 dataFile.createNewFile();
-                System.out.println("[Hardcore] data.yml was created successfully");
+                Bukkit.getLogger().log(Level.INFO,"[Hardcore] data.yml was created successfully");
             }catch(IOException e){
-                Bukkit.getServer().getConsoleSender().sendMessage("[Hardcore] data.yml could not be created... Is all writing permissions were set successfully ? Check the exception Stack Trace for more info.");
+                Bukkit.getLogger().log(Level.SEVERE,"[Hardcore] data.yml could not be created... Is all writing permissions were set correctly ? Check the exception Stack Trace for more info.");
                 e.printStackTrace();
             }
         }
@@ -40,7 +41,7 @@ public class ConfigManager {
         try {
             datas.save(dataFile);
         }catch(IOException e) {
-            System.out.println("[Hardcore] data.yml could not be saved... Is all writing permissions were set successfully ? Check the exception Stack Trace for more info.");
+            Bukkit.getLogger().log(Level.SEVERE, "[Hardcore] data.yml could not be saved... Is all writing permissions were set correctly ? Check the exception Stack Trace for more info.");
             e.printStackTrace();
         }
     }

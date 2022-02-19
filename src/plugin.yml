@@ -2,7 +2,7 @@ name: HardcoreSurvival
 version: 0.1
 author: bistourimaisaussiunpeusuprequandmeme
 main: fr.supre.hardcoresurvival.core.Main
-api-version: 1.16
+api-version: 1.18
 commands:
   revive:
     description: revive a dead player

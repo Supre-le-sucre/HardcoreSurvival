@@ -9,6 +9,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -130,6 +134,61 @@ public class Listeners implements Listener {
            }
         }
     }
+
+    @EventHandler
+    public void onPvP(EntityDamageByEntityEvent event) {
+        if (event.getEntity().hasPermission("hardcore.admin")) { return; }
+        if((!main.getConfig().getBoolean("Gameplay.Start.status") || !main.getConfig().getBoolean("Gameplay.Start.PvP")) && event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
+            Player p  = (Player) event.getDamager();
+            event.setCancelled(true);
+            p.sendMessage(main.getConfig().getString("Messages.no-pvp"));
+        }
+        else if((!main.getConfig().getBoolean("Gameplay.Start.status") && event.getDamager() instanceof Player)) {
+            Player p  = (Player) event.getDamager();
+            event.setCancelled(true);
+            p.sendMessage(main.getConfig().getString("Messages.no-start"));
+        }
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        if (event.getPlayer().hasPermission("hardcore.admin")) { return; }
+        if(!(main.getConfig().getBoolean("Gameplay.Start.status"))) {
+            Player p  = event.getPlayer();
+            event.setCancelled(true);
+            p.sendMessage(main.getConfig().getString("Messages.no-start"));
+        }
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (event.getPlayer().hasPermission("hardcore.admin")) { return; }
+        if(!(main.getConfig().getBoolean("Gameplay.Start.status"))) {
+            Player p  = event.getPlayer();
+            event.setCancelled(true);
+            p.sendMessage(main.getConfig().getString("Messages.no-start"));
+        }
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if (event.getPlayer().hasPermission("hardcore.admin")) { return; }
+        if(!(main.getConfig().getBoolean("Gameplay.Start.status"))) {
+            Player p  = event.getPlayer();
+            event.setCancelled(true);
+            p.sendMessage(main.getConfig().getString("Messages.no-start"));
+        }
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+        if(!(main.getConfig().getBoolean("Gameplay.Start.status"))) {
+            event.setCancelled(true);
+        }
+    }
+
+
+
     int getNumberOfRequiredSleep() {
         int n = 0;
         ArrayList<Player> Online =  new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
