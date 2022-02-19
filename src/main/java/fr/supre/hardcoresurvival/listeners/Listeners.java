@@ -57,7 +57,7 @@ public class Listeners implements Listener {
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()+1).getBlock().setType(Material.MOSSY_STONE_BRICKS);
         new Location(ploc.getWorld(), ploc.getX(), ploc.getY()+2,ploc.getZ()-1).getBlock().setType(Material.CRACKED_STONE_BRICKS);
         String d  = event.getDeathMessage();
-        if(event.getEntity().getLocation().getBlockY() < 0) event.setDeathMessage(main.getConfig().getString("Messages.notify-death-void").replace("%player%", p.getName()).replace("%x%", String.valueOf(ploc.getBlockX())).replace("%y%", String.valueOf(ploc.getBlockY())).replace("%z%", String.valueOf(ploc.getBlockZ())).replace("%death-message%", d));
+        if(event.getEntity().getLocation().getWorld().getEnvironment().equals(World.Environment.NORMAL) && event.getEntity().getLocation().getBlockY() < -64) event.setDeathMessage(main.getConfig().getString("Messages.notify-death-void").replace("%player%", p.getName()).replace("%x%", String.valueOf(ploc.getBlockX())).replace("%y%", String.valueOf(ploc.getBlockY())).replace("%z%", String.valueOf(ploc.getBlockZ())).replace("%death-message%", d));
         else event.setDeathMessage(main.getConfig().getString("Messages.notify-death").replace("%player%", p.getName()).replace("%x%", String.valueOf(ploc.getBlockX())).replace("%y%", String.valueOf(ploc.getBlockY())).replace("%z%", String.valueOf(ploc.getBlockZ())).replace("%death-message%", d));
         p.setGameMode(GameMode.SPECTATOR);
         Stream<Player> all = getConnectedPlayers().stream();
