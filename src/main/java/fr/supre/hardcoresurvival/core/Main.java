@@ -14,12 +14,12 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.logging.Level;
 
 public class Main extends JavaPlugin {
-    public ConfigManager cfmg;
+    public ConfigManager cfmg = new ConfigManager();
     public NamespacedKey keyBadOmenRecipe = new NamespacedKey(this, "badOmenRecipe");
 
     public void onEnable() {
         loadConfigManager();
-        saveDefaultConfig();
+        saveConfig();
         Bukkit.getLogger().log(Level.INFO, "§4[§6Hardcore§4] §2Plugin has started §4Good luck >:3");
         getServer().getPluginManager().registerEvents(new Listeners(this), this);
         getCommand("revive").setExecutor(new CommandHardcore(this));
@@ -62,11 +62,12 @@ public class Main extends JavaPlugin {
     }
 
     private void loadConfigManager() {
-        cfmg = new ConfigManager();
         cfmg.setup();
     }
 
     public void onDisable() {
+        cfmg.saveDatas();
+        saveConfig();
         Bukkit.getLogger().log(Level.INFO,"§4[§6Hardcore§4] Plugin disabled");
     }
 }

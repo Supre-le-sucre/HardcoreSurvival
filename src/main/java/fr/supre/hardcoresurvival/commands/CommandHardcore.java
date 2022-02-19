@@ -89,6 +89,7 @@ public class CommandHardcore implements CommandExecutor {
                     p.sendMessage(main.getConfig().getString("Messages.no-permission").replace("%perm%", "hardcore.start"));
                 else {
                     main.getConfig().set("Gameplay.Start.status", true);
+                    main.saveConfig();
                     p.getWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, true);
                     p.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
                     p.getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, true);
