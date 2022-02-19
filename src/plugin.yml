@@ -1,6 +1,6 @@
 name: HardcoreSurvival
 version: 0.1
-author: bistourimaisaussiunpeusuprequandmeme
+author: supre
 main: fr.supre.hardcoresurvival.core.Main
 api-version: 1.18
 commands:
