@@ -110,7 +110,6 @@ public class Listeners implements Listener {
             BukkitTask task = new BukkitRunnable() {
                @Override
                public void run() {
-                   Bukkit.broadcastMessage(String.valueOf(event.getItemDrop().getVelocity().getY()));
                    keepAlive[0]++;
                    if(event.getItemDrop().getVelocity().getY() == 0 || keepAlive[0] == 200) {
                        lastpos[0] = event.getItemDrop().getLocation();
