@@ -20,6 +20,7 @@ public class Main extends JavaPlugin {
 
     public void onEnable() {
         loadConfigManager();
+        saveDefaultConfig();
         saveConfig();
         Bukkit.getLogger().log(Level.INFO, "§4[§6Hardcore§4] §2Plugin has started §4Good luck >:3");
         getServer().getPluginManager().registerEvents(new Listeners(this), this);

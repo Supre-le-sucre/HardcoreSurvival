@@ -104,41 +104,55 @@ public class Listeners implements Listener {
             if (mat != null && item.equals(mat)) { valid = true; }
         }
         if(valid) {
-           List<String> uuidList = main.cfmg.getDatas().getStringList("Datas.dead");
-           for(String s: uuidList){
-               int x = main.cfmg.getDatas().getInt("Datas."+s+".X");
-               int y = main.cfmg.getDatas().getInt("Datas."+s+".Y");
-               int z = main.cfmg.getDatas().getInt("Datas."+s+".Z");
-               Location deathLoc = new Location(event.getPlayer().getWorld(),x+1,y+1,z);
-               if(event.getItemDrop().getLocation().getBlockX() == x && event.getItemDrop().getLocation().getBlockY() == y+1 && event.getItemDrop().getLocation().getBlockZ() == z){
-                   Player p = null;
-                    for(Player pl: main.getServer().getOnlinePlayers()){
-                        if(pl.getUniqueId().toString().equals(s)){
-                            p = pl;
-                            break;
-                        }
-                    }
-                    if(p == null){
-                        event.getPlayer().sendMessage(main.getConfig().getString("Messages.offline"));
-                        return;
-                    }else{
-                        p.teleport(deathLoc);
-                        p.setGameMode(GameMode.SURVIVAL);
-                        Bukkit.getServer().broadcastMessage(main.getConfig().getString("Messages.notify-revive").replace("%reviver%", event.getPlayer().getName()).replace("%revived%", p.getName()));
-                        p.getWorld().spawnParticle(Particle.SPELL_WITCH, event.getItemDrop().getLocation(), 150);
-                        p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, event.getItemDrop().getLocation(), 50);
-                        p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, event.getItemDrop().getLocation(), 75);
-                        p.getWorld().playSound(event.getItemDrop().getLocation(), Sound.ENTITY_WITHER_DEATH, 100, 1.5F);
-                        List<String> deadList = main.cfmg.getDatas().getStringList("Datas.dead");
-                        deadList.remove(String.valueOf(p.getUniqueId()));
-                        main.cfmg.getDatas().set("Datas.dead", deadList);
-                        main.cfmg.getDatas().set("Datas."+p.getUniqueId(), null);
-                        main.cfmg.saveDatas();
-                        event.getItemDrop().remove();
-                    }
-                   break;
+            final Location[] lastpos = {event.getItemDrop().getLocation()};
+            final int[] keepAlive = {0};
+            List<String> uuidList = main.cfmg.getDatas().getStringList("Datas.dead");
+            BukkitTask task = new BukkitRunnable() {
+               @Override
+               public void run() {
+                   Bukkit.broadcastMessage(String.valueOf(event.getItemDrop().getVelocity().getY()));
+                   keepAlive[0]++;
+                   if(event.getItemDrop().getVelocity().getY() == 0 || keepAlive[0] == 200) {
+                       lastpos[0] = event.getItemDrop().getLocation();
+                       for(String s: uuidList){
+                           int x = main.cfmg.getDatas().getInt("Datas."+s+".X");
+                           int y = main.cfmg.getDatas().getInt("Datas."+s+".Y");
+                           int z = main.cfmg.getDatas().getInt("Datas."+s+".Z");
+                           Location deathLoc = new Location(event.getPlayer().getWorld(),x+1,y+1,z);
+                           if((lastpos[0].getBlockX() == x && lastpos[0].getBlockY() == y && lastpos[0].getBlockZ() == z) || (lastpos[0].getBlockX() == x && lastpos[0].getBlockY() == y-1 && lastpos[0].getBlockZ() == z) || (lastpos[0].getBlockX() == x && lastpos[0].getBlockY() == y+1 && lastpos[0].getBlockZ() == z)
+                                   || (lastpos[0].getBlockX() == x+1 && lastpos[0].getBlockY() == y && lastpos[0].getBlockZ() == z) || (lastpos[0].getBlockX() == x+1 && lastpos[0].getBlockY() == y-1 && lastpos[0].getBlockZ() == z) || (lastpos[0].getBlockX() == x+1 && lastpos[0].getBlockY() == y+1 && lastpos[0].getBlockZ() == z)){
+                               Player p = null;
+                               for(Player pl: main.getServer().getOnlinePlayers()){
+                                   if(pl.getUniqueId().toString().equals(s)){
+                                       p = pl;
+                                       break;
+                                   }
+                               }
+                               if(p == null){
+                                   event.getPlayer().sendMessage(main.getConfig().getString("Messages.offline"));
+                                   return;
+                               }else{
+                                   p.teleport(deathLoc);
+                                   p.setGameMode(GameMode.SURVIVAL);
+                                   Bukkit.getServer().broadcastMessage(main.getConfig().getString("Messages.notify-revive").replace("%reviver%", event.getPlayer().getName()).replace("%revived%", p.getName()));
+                                   p.getWorld().spawnParticle(Particle.SPELL_WITCH, event.getItemDrop().getLocation(), 150);
+                                   p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, event.getItemDrop().getLocation(), 50);
+                                   p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, event.getItemDrop().getLocation(), 75);
+                                   p.getWorld().playSound(event.getItemDrop().getLocation(), Sound.ENTITY_WITHER_DEATH, 100, 1.5F);
+                                   List<String> deadList = main.cfmg.getDatas().getStringList("Datas.dead");
+                                   deadList.remove(String.valueOf(p.getUniqueId()));
+                                   main.cfmg.getDatas().set("Datas.dead", deadList);
+                                   main.cfmg.getDatas().set("Datas."+p.getUniqueId(), null);
+                                   main.cfmg.saveDatas();
+                                   event.getItemDrop().remove();
+                               }
+                               break;
+                           }
+                       }
+                       cancel();
+                   }
                }
-           }
+           }.runTaskTimer(main, 1, 1);
         }
     }
 
